@@ -34,6 +34,7 @@ namespace Gearset_PDF
         }
         private void ProcessCommand(string command)
         {
+            //separate commands from their arguments
             var split = command.Split(" ");
             var root = split[0];
             switch (root)
@@ -66,23 +67,31 @@ namespace Gearset_PDF
                     size = DEFAULT_FONT_SIZE;
                     break;
                 case "indent":
-                    try
+                    if (split.Length < 2)
                     {
-                        indentation = Math.Max(indentation + int.Parse(split[1]), 0);
+                        Console.WriteLine(".indent called with no argument, ignoring...");
                     }
-                    catch (FormatException)
+                    else
                     {
-                        //TODO: Exception handling
+                        try
+                        {
+                            //indentation can't be below 0
+                            indentation = Math.Max(indentation + int.Parse(split[1]), 0);
+                        }
+                        catch (FormatException)
+                        {
+                            Console.WriteLine($"Couldn't parse {split[1]} as an integer indentation!");
+                        }
                     }
                     break;
                 default:
-                    //TODO: More Exception handling
-                    Console.WriteLine("Unrecognised command: " + root);
+                    Console.WriteLine($"Unrecognised command: {root}\nContinuing on...");
                     break;
             }
         }
         private void WriteText(string toWrite)
         {
+            //add space between the start of words on different lines of the input file
             if (!currentParagraph.IsEmpty() && !char.IsPunctuation(toWrite[0]))
             {
                 toWrite = " " + toWrite;
