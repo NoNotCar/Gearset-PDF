@@ -12,13 +12,13 @@ class Program
         var inputLines = System.IO.File.ReadAllLines(currentDirectory + "/input.txt");
 
         var pdfDocument = new PdfDocument(new PdfWriter(new FileStream(currentDirectory + "/output.pdf", FileMode.Create, FileAccess.Write)));
-        var document = new Document(pdfDocument);
-        var textWriter = new TextWriter();
+        var textWriter = new TextWriter(new Document(pdfDocument));
 
         foreach (string line in inputLines)
         {
-            textWriter.writeText(document, line);
+            textWriter.writeText(line);
         }
+        var document = textWriter.getOutput();
         document.Close();
         Console.WriteLine("PDF Creation Successful!");
     }
