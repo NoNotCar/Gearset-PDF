@@ -6,4 +6,8 @@
     <RootNamespace>Gearset_PDF</RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="itext7" Version="7.1.12" />
+  </ItemGroup>
+
 </Project>
