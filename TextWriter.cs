@@ -36,6 +36,9 @@ class TextWriter
                 bold = false;
                 italic = false;
                 break;
+            case "paragraph":
+                AddCurrentParagraph();
+                break;
         }
     }
     private void WriteText(String toWrite)
@@ -51,12 +54,17 @@ class TextWriter
         }
         (currentParagraph ??= new Paragraph()).Add(text);
     }
-    public Document GetOutput()
+    private void AddCurrentParagraph()
     {
         if (!(currentParagraph is null))
         {
             doc.Add(currentParagraph);
+            currentParagraph = null;
         }
+    }
+    public Document GetOutput()
+    {
+        AddCurrentParagraph();
         return doc;
     }
 }
