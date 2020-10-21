@@ -4,23 +4,25 @@ using iText.Kernel.Pdf;
 using iText.Layout;
 using iText.Layout.Element;
 
-class Program
+namespace Gearset_PDF
 {
-    static void Main(string[] args)
+    class Program
     {
-        var workingDirectory = Environment.CurrentDirectory;
-        var currentDirectory = Directory.GetParent(workingDirectory).Parent.Parent.FullName;
-        var inputLines = System.IO.File.ReadAllLines(currentDirectory + "/input.txt");
-
-        var pdfDocument = new PdfDocument(new PdfWriter(new FileStream(currentDirectory + "/output.pdf", FileMode.Create, FileAccess.Write)));
-        var textWriter = new TextWriter(new Document(pdfDocument));
-
-        foreach (string line in inputLines)
+        static void Main(string[] args)
         {
-            textWriter.ProcessLine(line);
+            var workingDirectory = Environment.CurrentDirectory;
+            var currentDirectory = Directory.GetParent(workingDirectory).Parent.Parent.FullName;
+            var inputLines = File.ReadAllLines(currentDirectory + "/repeated.txt");
+
+            var pdfDocument = new PdfDocument(new PdfWriter(new FileStream(currentDirectory + "/output.pdf", FileMode.Create, FileAccess.Write)));
+            var textWriter = new TextWriter(new Document(pdfDocument));
+            foreach (string line in inputLines)
+            {
+                textWriter.ProcessLine(line);
+            }
+            var document = textWriter.GetOutput();
+            document.Close();
+            Console.WriteLine("PDF Creation Successful!");
         }
-        var document = textWriter.GetOutput();
-        document.Close();
-        Console.WriteLine("PDF Creation Successful!");
     }
 }
