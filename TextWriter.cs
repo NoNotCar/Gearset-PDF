@@ -12,7 +12,7 @@ namespace Gearset_PDF
         private Document doc;
         private bool bold = false;
         private bool italic = false;
-        private bool filled = false;
+        private TextAlignment alignment = TextAlignment.LEFT;
         private int size = DEFAULT_FONT_SIZE;
         private int indentation = 0;
         public TextWriter(Document document)
@@ -52,10 +52,10 @@ namespace Gearset_PDF
                     AddCurrentParagraph();
                     break;
                 case "fill":
-                    filled = true;
+                    alignment = TextAlignment.JUSTIFIED;
                     break;
                 case "nofill":
-                    filled = false;
+                    alignment = TextAlignment.LEFT;
                     //In the example given it ends the current paragraph as well...
                     AddCurrentParagraph();
                     break;
@@ -103,7 +103,7 @@ namespace Gearset_PDF
         {
             if (!(currentParagraph is null))
             {
-                currentParagraph.SetTextAlignment(filled ? TextAlignment.JUSTIFIED : TextAlignment.LEFT);
+                currentParagraph.SetTextAlignment(alignment);
                 currentParagraph.SetMarginLeft(indentation * 25);
                 doc.Add(currentParagraph);
                 currentParagraph = new Paragraph();
