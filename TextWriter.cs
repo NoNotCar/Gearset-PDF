@@ -1,19 +1,60 @@
+using System;
+using System.Runtime.InteropServices.ComTypes;
+using iText.IO.Font.Constants;
+using iText.Kernel.Font;
 using iText.Layout;
 using iText.Layout.Element;
 class TextWriter
 {
     private Paragraph currentParagraph;
     private Document doc;
-    public TextWriter(Document document)
+    private bool bold = false;
+    private bool italic = false;
+    public TextWriter(Document document) => doc = document;
+    public void ProcessLine(String line)
     {
-        doc = document;
+        if (line.StartsWith("."))
+        {
+            ProcessCommand(line.Substring(1));
+        }
+        else
+        {
+            WriteText(line);
+        }
     }
-    public void writeText(string text)
+    private void ProcessCommand(String command)
     {
-        (currentParagraph??=new Paragraph()).Add(text);
+        switch (command)
+        {
+            case "bold":
+                bold = true;
+                break;
+            case "italics":
+                italic = true;
+                break;
+            case "regular":
+                bold = false;
+                italic = false;
+                break;
+        }
     }
-    public Document getOutput(){
-        if (!(currentParagraph is null)){
+    private void WriteText(String toWrite)
+    {
+        var text = new Text(toWrite);
+        if (bold)
+        {
+            text.SetBold();
+        }
+        if (italic)
+        {
+            text.SetItalic();
+        }
+        (currentParagraph ??= new Paragraph()).Add(text);
+    }
+    public Document GetOutput()
+    {
+        if (!(currentParagraph is null))
+        {
             doc.Add(currentParagraph);
         }
         return doc;

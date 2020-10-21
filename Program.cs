@@ -8,7 +8,8 @@ class Program
 {
     static void Main(string[] args)
     {
-        var currentDirectory = Directory.GetCurrentDirectory();
+        var workingDirectory = Environment.CurrentDirectory;
+        var currentDirectory = Directory.GetParent(workingDirectory).Parent.Parent.FullName;
         var inputLines = System.IO.File.ReadAllLines(currentDirectory + "/input.txt");
 
         var pdfDocument = new PdfDocument(new PdfWriter(new FileStream(currentDirectory + "/output.pdf", FileMode.Create, FileAccess.Write)));
@@ -16,9 +17,9 @@ class Program
 
         foreach (string line in inputLines)
         {
-            textWriter.writeText(line);
+            textWriter.ProcessLine(line);
         }
-        var document = textWriter.getOutput();
+        var document = textWriter.GetOutput();
         document.Close();
         Console.WriteLine("PDF Creation Successful!");
     }
