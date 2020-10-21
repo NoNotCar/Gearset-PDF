@@ -1,16 +1,18 @@
 using System;
-using System.Runtime.InteropServices.ComTypes;
-using iText.IO.Font.Constants;
-using iText.Kernel.Font;
 using iText.Layout;
 using iText.Layout.Element;
+using iText.Layout.Properties;
+
 class TextWriter
 {
     private Paragraph currentParagraph;
     private Document doc;
     private bool bold = false;
     private bool italic = false;
-    public TextWriter(Document document) => doc = document;
+    public TextWriter(Document document) {
+        doc = document;
+        currentParagraph = new Paragraph();
+    }
     public void ProcessLine(String line)
     {
         if (line.StartsWith("."))
@@ -39,10 +41,18 @@ class TextWriter
             case "paragraph":
                 AddCurrentParagraph();
                 break;
+            case "nofill":
+                currentParagraph.SetTextAlignment(TextAlignment.JUSTIFIED);
+                AddCurrentParagraph();
+                break;
         }
     }
     private void WriteText(String toWrite)
     {
+        if (!currentParagraph.IsEmpty() && !Char.IsPunctuation(toWrite[0]))
+        {
+            toWrite = " " + toWrite;
+        }
         var text = new Text(toWrite);
         if (bold)
         {
@@ -52,14 +62,14 @@ class TextWriter
         {
             text.SetItalic();
         }
-        (currentParagraph ??= new Paragraph()).Add(text);
+        currentParagraph.Add(text);
     }
     private void AddCurrentParagraph()
     {
         if (!(currentParagraph is null))
         {
             doc.Add(currentParagraph);
-            currentParagraph = null;
+            currentParagraph = new Paragraph();
         }
     }
     public Document GetOutput()
