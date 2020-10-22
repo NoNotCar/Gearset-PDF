@@ -1,9 +1,5 @@
 ﻿using System;
 using System.IO;
-using Gearset_PDF;
-using iText.Kernel.Pdf;
-using iText.Layout;
-using iText.Layout.Element;
 
 namespace GearsetPDF
 {

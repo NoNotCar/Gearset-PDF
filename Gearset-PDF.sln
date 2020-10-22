@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.30611.23
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gearset-PDF", "Gearset-PDF.csproj", "{A3C18F2F-81AB-40A2-A6AF-008A6FB646E7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GearsetUnitTests", "..\GearsetUnitTests\GearsetUnitTests.csproj", "{CA6DE13E-489C-4AB5-99BA-191DD778951C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GearsetSnapshotTests", "..\GearsetUnitTests\GearsetSnapshotTests.csproj", "{CA6DE13E-489C-4AB5-99BA-191DD778951C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,15 +1,14 @@
-﻿using GearsetPDF;
-using iText.Layout.Properties;
+﻿using iText.Layout.Properties;
 using System;
 using System.IO;
 
-namespace Gearset_PDF
+namespace GearsetPDF
 {
-    class InputParser
+    public class InputParser
     {
         private PDFTextWriter textWriter;
         public InputParser(PDFTextWriter text) => textWriter = text;
-        public void Parse(String filename)
+        public void Parse(string filename)
         {
             var inputLines = File.ReadAllLines(filename);
             foreach (string line in inputLines)
